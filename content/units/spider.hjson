@@ -1,0 +1,98 @@
+{
+  type: legs
+  name: spider-unit
+  localizedName: Copper Guardian
+  description: a spider template unit, intended to be a guardian level unit, change description when changing the unit
+  
+  // Size fixes from earlier
+  hitSize: 9
+
+    // --- PASSIVE SELF HEALING ---
+  abilities: [
+    {
+      type: RegenAbility
+      // The exact amount of flat HP restored per frame (60 frames = 1 second)
+      // 3.5 HP per frame = 210 HP per second
+      amount: 3.5
+    }
+  ]
+
+
+  // Multi-Jointed Sprite Mapping
+  legCount: 8            // Toxopid is an 8-legged colossus
+  legLength: 55          // Massive length allows the joint to extend far from the body
+  legBaseOffset: 11      // Forces the leg hips to attach wide away from the chassis center
+  
+  // Forces the knees/joints to reach sharply forward and outward 
+  legForwardRadius: 1.75 
+  
+  // Staggers the pairs heavily along the length of the body
+  legPairOffset: 4       
+  
+  // The spacing footprint between where feet step (keeps them from clumping)
+  legMoveSpace: 0.8      
+  
+  // Scales the thigh segment relative to the shin segment
+  legScale: 0.75         
+  
+  // Fine-tunes the seam overlay where the thigh, joint, and shin connect
+  legExtension: -6       
+  
+  // Forces joints to stay locked to the body mount rotation angle
+  lockLegBase: true      
+  
+  // Optional aesthetic configs for massive spiders:
+  legContinuousMove: true // Legs keep shifting naturally even when standing still
+  legBaseUnder: true      // Draws the thigh segment underneath the chassis sprite
+  rippleScale: 3.0        // Creates huge ground dust ripples when stepping
+
+
+  weapons: [
+    {
+      name: my-spider-beam
+      x: 0                 // Centered on the chassis
+      y: 4                 // Mounted slightly forward
+      shootY: 2            // Laser emits from the tip of the weapon sprite
+      mirror: false        // Single center-mounted weapon
+      
+      // --- EREKIR SNAPPY AIMING ---
+      rotate: true
+      rotateSpeed: 360     // High rotation speed lets it snap to targets instantly
+      shootCone: 5         // Unit must be facing almost directly at target to fire
+      
+      reload: 60           // Cooldown before it can fire the beam again
+      shootDuration: 120   // Beam stays active for 2 full seconds (120 frames)
+      
+      shootSound: beamPlasma     // Constant laser hum
+      loopSound: beamPlasma
+      loopSoundVolume: 0.6
+      
+            bullet: {
+        type: ContinuousLaserBulletType
+        damage: 45         // High tick damage
+        length: 160        // Range
+        width: 3           // Thin laser beam
+        oscillateWidth: 1
+        
+        // --- ARMOR MELTING STATUS EFFECT ---
+        status: corroded   // Appears as a green melting effect on enemies
+        statusDuration: 180 // Enemy armor remains stripped/melted for 3 full seconds after being hit
+        
+        // Meltdown Colors
+        colors: [
+          eb2a2a           
+          ff5e5e           
+          ffb3b3           
+          ffffff           
+        ]
+        
+        incendChance: 0.4  
+        incendAmount: 2
+        largeHit: false    
+      }
+
+    }
+  ]
+
+}
+
